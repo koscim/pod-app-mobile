@@ -1,0 +1,3 @@
+rootProject.name = 'PodApp'
+
+include ':app'
