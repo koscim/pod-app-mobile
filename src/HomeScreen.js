@@ -35,6 +35,10 @@ export default class HomeScreen extends Component {
           onPress={() => navigate('SubscriptionIndex')}
           title='Subscriptions'
         />
+        <Button
+          onPress={() => navigate('Podcasts')}
+          title='Podcast Index'
+        />
       </View>
     );
   }
