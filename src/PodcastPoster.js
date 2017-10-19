@@ -19,6 +19,7 @@ export default class PodcastPoster extends Component {
 
   render() {
     const { podcast, podcast: { artistName, collectionName, artUrl }, onOpen } = this.props;
+    console.log(artUrl);
     return (
       <TouchableOpacity style={styles.container} onPress={() => onOpen(podcast)}>
         <View style={styles.imageContainer}>

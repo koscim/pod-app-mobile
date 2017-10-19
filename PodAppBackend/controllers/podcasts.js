@@ -18,21 +18,40 @@ export const index = (req, res, next) => {
     path: '/search?term=podcast&genreId=1318&limit=50'
   };
 
+
   http.get(options, function(response) {
     console.log("Got response: " + response.statusCode);
     console.log('HEADERS: ' + JSON.stringify(response.headers));
+    let body = '';
     response.setEncoding('utf8');
     response.on('data', function(chunk) {
-      console.log('BODY: ' + chunk);
-    })
+      body += chunk;
+    });
+    response.on('end', function() {
+      // console.log('BODY: ' + body);
+      let jsonBody = JSON.parse(body);
+      let podcasts = [];
+      jsonBody["results"].forEach((result) => {
+        let podcast = {
+          artistName: result["artistName"],
+          collectionName: result["collecitonName"],
+          collectionId: result["collectionId"],
+          artUrl: result["artworkUrl600"],
+          description: ''
+        }
+        podcasts.push(podcast)
+      })
+      console.log(podcasts);
+      res.json(
+        {
+          podcasts: podcasts
+        }
+      )
+    });
   }).on('error', function(e) {
     console.log("Got error: " + e.message);
   });
-  console.log('YAYAYAYAYAY');
-  // http.get({
-  //   uri: 'https://itunes.apple.com/search?term=podcast&genreId=1318&limit=1000'
-  // }).pipe(res);
-  // console.log(res);
+  // console.log(jsonBody.results);
 };
 
 export const categories = (req, res, next) => {
