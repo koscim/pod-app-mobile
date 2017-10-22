@@ -17,7 +17,8 @@ import { connect } from 'react-redux';
     loading: state.loading
   }),
   dispatch => ({
-    refresh: () => dispatch({ type: 'GET_PODCAST_DATA'})
+      refresh: () => dispatch({ type: 'GET_PODCAST_DATA'}),
+      getPodcasts: () => dispatch({ type: 'GET_PODCAST_DATA'})
   })
 )
 
@@ -37,6 +38,10 @@ export default class Podcasts extends Component {
     this.setState({
       popupIsOpen: false,
     })
+  }
+
+  componentDidMount(){
+    this.props.getPodcasts()
   }
 
   render() {

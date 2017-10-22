@@ -29,12 +29,16 @@ const instructions = Platform.select({
 // Create Redux store
 const store = createStore(reducer, {}, applyMiddleware(apiMiddleware))
 
+console.log(store.getState());
 // Fetch podcast data
-store.dispatch({ type: 'GET_PODCAST_DATA' });
+// store.dispatch({ type: 'GET_PODCAST_DATA' });
+console.log(store.getState());
+// store.dispatch({ type: 'GET_SUBSCRIPTION_DATA' });
+console.log(store.getState());
 
 const SimpleApp = StackNavigator({
   Home: { screen: HomeScreen },
-  SubscriptionIndex: { screen: Subscriptions },
+  Subscriptions: { screen: Subscriptions },
   Podcasts: { screen: Podcasts }
 })
 

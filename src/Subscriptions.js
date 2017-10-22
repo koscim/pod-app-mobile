@@ -7,21 +7,73 @@ import {
   ActivityIndicator,
   RefreshControl
 } from 'react-native';
+import PodcastPoster from './PodcastPoster';
+import { StackNavigator } from 'react-navigation';
+import { connect } from 'react-redux';
 
-export default class Movies extends Component {
-  static navigationOptions = {
-    title: 'Welcome',
-    headerStyle: {
-      backgroundColor: 'grey',
-    },
-    headerTitleStyle: {
-      color: 'white'
-    }
-  };
+@connect(
+  state => ({
+    subscriptions: state.subscriptions,
+    loading: state.loading
+  }),
+  dispatch => ({
+    refresh: () => dispatch({ type: 'GET_SUBSCRIPTION_DATA'}),
+    getSubscriptions: () => dispatch({ type: 'GET_SUBSCRIPTION_DATA'})
+  })
+)
+
+export default class Subscriptions extends Component {
+  state = {
+    popupIsOpen: false,
+  }
+
+  openPodcast = (podcast) => {
+    this.setState({
+      popupIsOpen: true,
+      podcast
+    });
+  }
+
+  closePodcast = () => {
+    this.setState({
+      popupIsOpen: false,
+    })
+  }
+
+  componentDidMount(){
+    this.props.getSubscriptions()
+  }
+
   render() {
+    const { subscriptions, loading, refresh } = this.props;
+    console.log(this.props)
     return (
       <View style={styles.container}>
-        <Text>Subscriptions</Text>
+        {subscriptions
+          ? <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            // Hide all scroll indicators
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={refresh}
+              />
+            }
+          >
+            {subscriptions.map((podcast, index) => <PodcastPoster
+              podcast={podcast}
+              onOpen={this.openPodcast}
+              key={index}
+            />)}
+          </ScrollView>
+          : <ActivityIndicator
+              animating={loading}
+              style={styles.loader}
+              size="large"
+            />
+          }
       </View>
     );
   }

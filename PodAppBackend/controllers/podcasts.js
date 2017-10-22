@@ -4,6 +4,16 @@ import http from 'http';
 import https from 'https';
 import request from 'request';
 
+export const subscriptions = (req, res, next) => {
+  // Find all podcasts in subscriptions and return json response
+  Podcast.find().lean().exec((err, podcasts) => res.json(
+    // Iterate through each podcast
+    { podcasts: podcasts.map(podcast => ({
+      ...podcast
+    }))}
+  ));
+}
+
 export const index = (req, res, next) => {
   // Find all podcasts and return json response
   // Podcast.find().lean().exec((err, podcasts) => res.json(
