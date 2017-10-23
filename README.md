@@ -4,10 +4,11 @@
 - This application uses Mongoose for modeling podcast data, writing MongoDB validation and type casting.
 
 # Built with #
-React Native
-react-navigation
-Express
-Node.js
-MongoDB
-Passport.js
-bcrypt
+* React Native
+* react-navigation
+* Node.js
+* Express
+* MongoDB
+* mongoose
+* Passport.js
+* bcrypt
